@@ -1,0 +1,12 @@
+timestamp,location,department,hiring_time,fair_strategies,rehire,payment_negotiation
+2025-07-17 12:30:39.637684,Afghanistan,Recruitment,1-2 weeks,"Blind resume screening, Structured interviews, Bias training for interviewers",Rarely,Negotiation based on market rates
+2025-07-17 12:30:39.637684,Afghanistan,Recruitment,1-2 weeks,"Blind resume screening, Structured interviews, Bias training for interviewers",Rarely,Negotiation based on market rates
+2025-07-17 12:31:55.556276,Germany,Training,2-4 weeks,"Diverse hiring panels, Bias training for interviewers, Other",Occasionally,Fixed salary bands with no negotiation
+2025-07-17 12:37:56.054457,South Africa,Hiring,1-2 weeks,"Blind resume screening, Bias training for interviewers","Yes, frequently",Fixed salary bands with no negotiation
+2025-07-17 14:04:26.366516,Greece,Employee Relations,2-4 weeks,"Diverse hiring panels, Blind resume screening, Bias training for interviewers",Occasionally,Negotiation based on skills assessment
+2025-07-17 14:57:24.464105,United States,Compensation,2-4 weeks,"Blind resume screening, Structured interviews, Diverse hiring panels, Skills-based assessments, Standardized evaluation criteria, Bias training for interviewers, Other",Never,Other approach
+2025-07-17 14:57:31.314139,United States,Compensation,2-4 weeks,"Blind resume screening, Structured interviews, Diverse hiring panels, Skills-based assessments, Standardized evaluation criteria, Bias training for interviewers, Other",Never,Other approach
+2025-07-17 14:59:51.936707,United States,Onboarding,1-2 months,"Blind resume screening, Structured interviews, Diverse hiring panels, Skills-based assessments, Standardized evaluation criteria, Bias training for interviewers, Other",Occasionally,Negotiation based on candidate's current salary
+2025-07-17 15:00:52.872794,United States,Talent Management,1-2 weeks,"Blind resume screening, Structured interviews, Diverse hiring panels, Skills-based assessments, Standardized evaluation criteria, Bias training for interviewers, Other",Rarely,Negotiation based on skills assessment
+2025-07-17 16:59:43.376712,India,Training,More than 2 months,"Structured interviews, Skills-based assessments",Never,Fixed salary bands with no negotiation
+2025-07-18 13:56:26.530083,United Kingdom,Hiring,2-4 weeks,"Standardized evaluation criteria, Diverse hiring panels, Blind resume screening",Never,Fixed salary bands with no negotiation
