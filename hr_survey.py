@@ -6,21 +6,41 @@ import geopandas as gpd
 import pycountry
 from datetime import datetime
 import os
+import uuid
+import firebase_admin
+from firebase_admin import credentials, db
 
-# Initialize session state for data storage with a unique key
-if 'hr_survey_data' not in st.session_state:
-    st.session_state.hr_survey_data = pd.DataFrame(columns=[
-        'timestamp', 'location', 'department', 
-        'hiring_time', 'fair_strategies', 'rehire', 'payment_negotiation'
-    ])
-    # Load existing data immediately upon first visit
-    if os.path.exists('hr_survey_data.csv'):
-        st.session_state.hr_survey_data = pd.read_csv('hr_survey_data.csv')
+@st.cache_resource
+def init_firebase():
+    if not firebase_admin._apps:
+        cred = credentials.Certificate(dict(st.secrets["firebase"]))
+        firebase_admin.initialize_app(cred, {
+            'databaseURL': st.secrets["firebase"]["databaseURL"]
+        })
 
-# Function to save survey data and update dashboard
+# Always call this before any Firebase operation
+init_firebase()
+
+@st.cache_data(ttl=60)
+def load_data_from_firebase():
+    init_firebase()
+    ref = db.reference("/hr-survey-responses")  # 👈 New node
+    data = ref.get()
+    if data:
+        df = pd.DataFrame(data.values())
+        return df
+    else:
+        return pd.DataFrame(columns=[
+            'timestamp', 'location', 'department', 
+            'hiring_time', 'fair_strategies', 'rehire', 'payment_negotiation'
+        ])
+
 def save_survey(location, department, hiring_time, fair_strategies, rehire, payment_negotiation):
+    init_firebase()
+    response_id = str(uuid.uuid4())
+
     new_entry = {
-        'timestamp': datetime.now(),
+        'timestamp': datetime.now().isoformat(timespec='seconds'),
         'location': location,
         'department': department,
         'hiring_time': hiring_time,
@@ -28,18 +48,52 @@ def save_survey(location, department, hiring_time, fair_strategies, rehire, paym
         'rehire': rehire,
         'payment_negotiation': payment_negotiation
     }
-    
-    # Convert to DataFrame and append
+
+    # 🔄 Save to the new node
+    ref = db.reference("/hr-survey-responses")
+    ref.child(response_id).set(new_entry)
+
+    # Add to session state
     new_df = pd.DataFrame([new_entry])
     st.session_state.hr_survey_data = pd.concat([st.session_state.hr_survey_data, new_df], ignore_index=True)
-    
-    # Save to CSV (overwrite entire file to maintain consistency)
-    st.session_state.hr_survey_data.to_csv('hr_survey_data.csv', index=False)
+
     st.success("Thank you for completing the survey!")
+
+# # Initialize session state for data storage with a unique key
+# if 'hr_survey_data' not in st.session_state:
+#     st.session_state.hr_survey_data = pd.DataFrame(columns=[
+#         'timestamp', 'location', 'department', 
+#         'hiring_time', 'fair_strategies', 'rehire', 'payment_negotiation'
+#     ])
+#     # Load existing data immediately upon first visit
+#     if os.path.exists('hr_survey_data.csv'):
+#         st.session_state.hr_survey_data = pd.read_csv('hr_survey_data.csv')
+
+# # Function to save survey data and update dashboard
+# def save_survey(location, department, hiring_time, fair_strategies, rehire, payment_negotiation):
+#     new_entry = {
+#         'timestamp': datetime.now(),
+#         'location': location,
+#         'department': department,
+#         'hiring_time': hiring_time,
+#         'fair_strategies': ", ".join(fair_strategies) if isinstance(fair_strategies, list) else fair_strategies,
+#         'rehire': rehire,
+#         'payment_negotiation': payment_negotiation
+#     }
+    
+#     # Convert to DataFrame and append
+#     new_df = pd.DataFrame([new_entry])
+#     st.session_state.hr_survey_data = pd.concat([st.session_state.hr_survey_data, new_df], ignore_index=True)
+    
+#     # Save to CSV (overwrite entire file to maintain consistency)
+#     st.session_state.hr_survey_data.to_csv('hr_survey_data.csv', index=False)
+#     st.success("Thank you for completing the survey!")
 
 def show_hr_survey():
     st.title("HR Hiring Practices for Gig Workers: Survey")
-    
+    if "hr_survey_data" not in st.session_state:
+        st.session_state.hr_survey_data = load_data_from_firebase()
+
     with st.form("hr_survey_form"):
         # Location input
         country_names = [country.name for country in pycountry.countries]
@@ -99,7 +153,8 @@ def show_hr_survey():
 
 def show_hr_dashboard():
     st.title("Survey Results: Gig-Hiring Practices Around The Globe")
-    
+    if "hr_survey_data" not in st.session_state:
+        st.session_state.hr_survey_data = load_data_from_firebase()
     # Always show the dashboard, even with empty data
     # if st.session_state.hr_survey_data.empty:
     #     st.warning("No survey data available yet. Please complete the survey to see analytics.")
