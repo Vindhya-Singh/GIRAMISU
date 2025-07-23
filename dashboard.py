@@ -4,12 +4,36 @@ import pandas as pd
 import matplotlib
 import plotly.express as px
 import random
+
+import firebase_admin
+from firebase_admin import credentials, db
 from datetime import datetime
+import uuid
 
 from streamlit.components.v1 import html
 from hr_survey import hr_survey_page
 
+# Initialize Firebase only once
+@st.cache_resource
+def init_firebase():
+    cred = credentials.Certificate(st.secrets["firebase"])
+    firebase_admin.initialize_app(cred, {
+        'databaseURL': st.secrets["firebase"]["databaseURL"]
+    })
 
+init_firebase()
+
+def submit_story_to_firebase(name, role, story):
+    ref = db.reference("/stories")
+    story_id = str(uuid.uuid4())
+    data = {
+        "timestamp": datetime.now().isoformat(timespec="seconds"),
+        "name": name,
+        "role": role,
+        "story": story
+    }
+    ref.child(story_id).set(data)
+    
 # --- Stories Database (CSV Storage) ---
 story_file = "stories.csv"
 submitted_story_file = 'submitted_stories.csv'
@@ -557,9 +581,18 @@ elif menu == "HR Voices and Sentiments":
         role = st.text_input("Your Role")
         story = st.text_area("What’s your experience managing gig workers?")
         submitted = st.form_submit_button("Submit Story")
-        if submitted:
-            save_story(name, role, story)
-            st.success("Thanks for sharing your story!")
+
+    if submitted:
+        submit_story_to_firebase(name, role, story)
+        st.success("Thanks for sharing your story!")
+    # with st.form("story_form"):
+    #     name = st.text_input("Your Location")
+    #     role = st.text_input("Your Role")
+    #     story = st.text_area("What’s your experience managing gig workers?")
+    #     submitted = st.form_submit_button("Submit Story")
+    #     if submitted:
+    #         save_story(name, role, story)
+    #         st.success("Thanks for sharing your story!")
 
 # # In your page routing:
 if menu == "Transparency Tracker":
