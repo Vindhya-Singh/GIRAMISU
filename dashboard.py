@@ -165,7 +165,7 @@ elif menu == "Global HR Compass":
     )
         st.plotly_chart(fig, use_container_width=True)
         
-        st.write("**What are the most important Discourse Topics in the global HRM discussions on managing gig workers?**")
+        st.write("**What are the most important Discourse Topics in the global HRM disourse on managing gig workers?**")
         st.write("**How to use:** Click on See Explanation to know more about each Discourse Topic.")
         topics_data = {
             "💼 Work From Home": "Work From Home in the gig economy enables high-skilled roles to be outsourced globally, advancing gig workers up the value chain, while its flexibility particularly empowers women to participate more actively than in traditional sectors.",
@@ -194,7 +194,7 @@ elif menu == "Global HR Compass":
                     st.write(back_content)
 
     with col2:
-        st.write("**HRM Practices Longitudnal Evolution**")
+        st.write("**HRM Practices Longitudinal Evolution**")
         # Create DataFrame from the chart data
         data = {
             "Year": ["2009", "2016", "2017", "2018", "2019", "2020", "2021", "2022", "2023", "2024"],
@@ -286,7 +286,7 @@ elif menu == "Global HR Compass":
                 "Covid": [306, 514, 561, 340, 391, 390, 526, 531, 249, 807],
                 "AI in gig work": [554, 1004, 880, 717, 729, 725, 997, 1018, 474, 1477]
             }
-        st.write("**How are HRM Practices related to the discussion topics?**")
+        st.write("**How are HRM Practices related to the Discourse Topics?**")
     
         # Create DataFrame
         df = pd.DataFrame(data)
@@ -399,7 +399,7 @@ elif menu == "Impact Metrics Hub":
         """)
         
         survey_link = "https://qualtricsxmqkspmg99k.qualtrics.com/jfe/form/SV_43eZXhMl5krog0m"
-        st.code(survey_link, language="markdown")
+        st.code(survey_link, language="HTML")
         
         st.markdown("""
         The survey will ask about:
