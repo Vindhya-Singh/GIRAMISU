@@ -16,11 +16,16 @@ from hr_survey import hr_survey_page
 # Initialize Firebase only once
 @st.cache_resource
 def init_firebase():
-    cred = credentials.Certificate(dict(st.secrets["firebase"]))
-    firebase_admin.initialize_app(cred, {
-        'databaseURL': st.secrets["firebase"]["databaseURL"]
-    })
+    if not firebase_admin._apps:
+        cred = credentials.Certificate(dict(st.secrets["firebase"]))
+        firebase_admin.initialize_app(cred, {
+            'databaseURL': st.secrets["firebase"]["databaseURL"]
+        })
 
+# Always call this before any Firebase operation
+init_firebase()
+
+# Write to Firebase Realtime Database
 def submit_story_to_firebase(name, role, story):
     ref = db.reference("/stories")
     story_id = str(uuid.uuid4())
