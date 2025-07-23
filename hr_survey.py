@@ -101,9 +101,9 @@ def show_hr_dashboard():
     st.title("Survey Results: Gig-Hiring Practices Around The Globe")
     
     # Always show the dashboard, even with empty data
-    if st.session_state.hr_survey_data.empty:
-        st.warning("No survey data available yet. Please complete the survey to see analytics.")
-        return
+    # if st.session_state.hr_survey_data.empty:
+    #     st.warning("No survey data available yet. Please complete the survey to see analytics.")
+    #     return
     
     # Display basic stats
     st.subheader("Survey Responses Overview")

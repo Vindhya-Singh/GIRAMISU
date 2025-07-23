@@ -24,7 +24,8 @@ def save_story(name, role, story):
     df = load_stories()
     new_row = {"timestamp": datetime.now().date(), "name": name, "role": role, "story": story}
     df = pd.concat([df, pd.DataFrame([new_row])], ignore_index=True)
-    df.to_csv(submitted_story_file, index=False)
+    open('submitted_stories.csv', 'w').write(df.to_csv(), index=False)
+    # df.to_csv(submitted_story_file, index=False)
 
     
 # --- Page Config ---
@@ -552,7 +553,7 @@ elif menu == "HR Voices and Sentiments":
     st.subheader("📝 Share Your Story")
 
     with st.form("story_form"):
-        name = st.text_input("Your Name (optional)")
+        name = st.text_input("Your Location")
         role = st.text_input("Your Role")
         story = st.text_area("What’s your experience managing gig workers?")
         submitted = st.form_submit_button("Submit Story")
