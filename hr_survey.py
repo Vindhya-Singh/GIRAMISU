@@ -5,7 +5,6 @@ import plotly.express as px
 import geopandas as gpd
 import pycountry
 from datetime import datetime
-import os
 import uuid
 import firebase_admin
 from firebase_admin import credentials, db

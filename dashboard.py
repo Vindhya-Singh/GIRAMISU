@@ -1,7 +1,5 @@
-import json
 import streamlit as st
 import pandas as pd
-import matplotlib
 import plotly.express as px
 import random
 
@@ -62,11 +60,13 @@ st.set_page_config(page_title="📊 HRM Perspectives on Gig Work", layout="wide"
 menu = st.sidebar.radio("Navigation", ["Homepage", "Global HR Compass", "Impact Metrics Hub", "HR Voices and Sentiments", "Transparency Tracker"])
 
 if menu == "Homepage":
-    st.title("Welcome to GIRAMISU: Gig Inclusion and Responsible Action through Managerial Insight and Sensemaking for Use")
+    st.title("Welcome to GIRAMISU")
+    st.subheader("Gig Inclusion and Responsible Action through Managerial Insight and Sensemaking for Use")
     st.markdown("---")
 
     st.subheader("🔍 What is this about?")
-    st.write("This dashboard explores gig economy through the lens of HR Managers. Our Motto is: Gig Inclusion and Responsible Action through Managerial Insight and Sensemaking for Use.")
+    st.write("Inspired by the layered harmony of tiramisu, we recognize three pillars of the gig economy: policy makers who shape the landscape, gig workers who fuel its flexibility, and HR managers who bridge the gap between structure and agility. Designed exclusively for HR leaders, GIRAMISU transforms raw insights into actionable strategies, fostering transparency in hiring practices, accountability in workforce management, and fairness in workplace climates. This is your platform to navigate the complexities of the gig economy with confidence—because inclusive growth begins with empowered decision-making.")
+    st.write("Explore. Act. Lead. Because managing gig talent shouldn’t be a guessing game.")
 
     st.subheader("🎥 Watch an Overview Video")
     st.video("https://www.youtube.com/watch?v=Wax8gZBCur4")  # Replace with your real video
