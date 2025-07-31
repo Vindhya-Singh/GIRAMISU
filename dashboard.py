@@ -54,14 +54,14 @@ def save_story(name, role, story):
 
     
 # --- Page Config ---
-st.set_page_config(page_title="📊 HRM Perspectives on Gig Work", layout="wide")
+st.set_page_config(page_title="📊 GIRAMISU", layout="wide")
 
 # --- Sidebar Navigation ---
 menu = st.sidebar.radio("Navigation", ["Homepage", "Global HR Compass", "Impact Metrics Hub", "HR Voices and Sentiments", "Transparency Tracker"])
 
 if menu == "Homepage":
     st.title("Welcome to GIRAMISU")
-    st.subheader("Gig Inclusion and Responsible Action through Managerial Insight and Sensemaking for Use")
+    st.subheader("Gig Inclusion and Responsible Action through Managerial Insight and Situated Understanding")
     st.markdown("---")
 
     st.subheader("🔍 What is this about?")
@@ -108,7 +108,7 @@ if menu == "Homepage":
     st.write("For feedback or questions, contact: hr-dashboard@example.com")
 
     st.subheader("💡 Motivation")
-    st.markdown("[Read our research motivation](https://example.com/motivation)")  # Replace with real link
+    st.markdown("[Read our research motivation](https://docs.google.com/document/d/1GRYIYdFG8Ene6Mb3j9hWS6I1n-lMcNzoOk-1NoE3VIg/edit?usp=sharing)")  # Replace with real link
 
 elif menu == "Global HR Compass":
     st.title("Global HR Compass")
@@ -116,7 +116,7 @@ elif menu == "Global HR Compass":
     st.markdown("---")
     
     # Chart customizations
-    st.sidebar.header("Chart Customization")
+    st.sidebar.header("Chart Customization: Adjust the sliders to see charts change")
     line_width = st.sidebar.slider("Line width", 1, 5, 2)
     st.sidebar.subheader("Font Sizes")
     axis_title_font_size = st.sidebar.slider("Axis title font size", 10, 20, 14)
