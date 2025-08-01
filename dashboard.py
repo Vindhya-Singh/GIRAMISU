@@ -69,7 +69,7 @@ if menu == "Homepage":
     st.write("Explore. Act. Lead. Because managing gig talent shouldn’t be a guessing game.")
 
     st.subheader("🎥 Watch an Overview Video")
-    st.video("https://youtu.be/MrH0N-zluaU")  # Replace with your real video
+    st.video("https://youtu.be/eR7UOBTpXUs")  # Replace with your real video
 
     st.subheader("👥 HR Code of Ethics")
     st.markdown("""These fundamental principles guide ethical decision-making in Human Resources:""")
