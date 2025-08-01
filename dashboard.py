@@ -105,7 +105,7 @@ if menu == "Homepage":
         """)
 
     st.subheader("📬 Contact & Feedback")
-    st.write("For feedback or questions, contact: hr-dashboard@example.com")
+    st.write("For feedback or questions, contact: vsingh@is.mpg.de")
 
     st.subheader("💡 Motivation")
     st.markdown("[Read our research motivation](https://docs.google.com/document/d/1GRYIYdFG8Ene6Mb3j9hWS6I1n-lMcNzoOk-1NoE3VIg/edit?usp=sharing)")  # Replace with real link
@@ -409,7 +409,7 @@ elif menu == "Impact Metrics Hub":
         - Inclusion Climate
         """)
     st.subheader("📬 Got Any Questions?")
-    st.write("Contact Us: hr-dashboard@example.com")
+    st.write("Contact Us: vsingh@is.mpg.de")
     
 
 elif menu == "HR Voices and Sentiments":
@@ -574,7 +574,7 @@ elif menu == "HR Voices and Sentiments":
             )
             with st.expander("See explanation"):
                 st.write(description)
-    st.write("For collaborations, contact: hr-dashboard@example.com")
+    st.write("For collaborations, contact: vsingh@is.mpg.de")
     
     st.markdown("---")
     st.subheader("📝 Share Your Story")
