@@ -326,7 +326,7 @@ elif menu == "Global HR Compass":
         
 elif menu == "Impact Metrics Hub":
     st.title("Impact Metrics Hub")
-    st.markdown("### Tracking HR performance metrics for departments managing gig workers—including employee job satisfaction, psychological safety, positive work environment, and inclusion climate—is essential for fostering transparency and upholding accountability in the gig economy.")
+    st.markdown("### Tracking HR performance metrics for departments managing gig workers—including job satisfaction, psychological safety, positive work environment, and inclusion climate—is essential for fostering transparency and upholding accountability in the gig economy.")
     st.markdown("---")
     
     def generate_hr_performance_data():
@@ -338,10 +338,10 @@ elif menu == "Impact Metrics Hub":
             data.append({
                 "HR Group": group,
                 "Performance Score": random.randint(70, 100),
-                "Employee Job Satisfaction": random.randint(70, 100),   # measured via JSS scale
-                "Psychological Safety": random.randint(70, 100),        # measured through PsychSafety scale
-                "Positive Work Environment": random.randint(70, 100),  # measured through InterpersCitizBehav
-                "Inclusion Climate": random.randint(75,90),             # measured through Kossek's scale on inclusion
+                "Gig Worker's Job Satisfaction": random.randint(70, 100),   # measured via JSS scale
+                "Gig Worker's Psychological Safety": random.randint(70, 100),        # measured through PsychSafety scale
+                "Positive Work Environment for Gig Workers": random.randint(70, 100),  # measured through InterpersCitizBehav
+                "Inclusion Climate for Gig Workers": random.randint(75,90),             # measured through Kossek's scale on inclusion
                 "Month": months[0]
             })
         return pd.DataFrame(data)
@@ -402,8 +402,8 @@ elif menu == "Impact Metrics Hub":
         st.code(survey_link, language="HTML")
         
         st.markdown("""
-        The survey will ask about:
-        - Employee Job Satisfaction
+        The survey will ask gig workers to rate your HR department on the basis of:
+        - Job Satisfaction
         - Psychological Safety
         - Positive Work Environment
         - Inclusion Climate
