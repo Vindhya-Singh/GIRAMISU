@@ -1,4 +1,5 @@
 import streamlit as st
+import time
 import pandas as pd
 import matplotlib.pyplot as plt
 import plotly.express as px
@@ -56,7 +57,8 @@ def save_survey(location, department, hiring_time, fair_strategies, rehire, paym
     new_df = pd.DataFrame([new_entry])
     st.session_state.hr_survey_data = pd.concat([st.session_state.hr_survey_data, new_df], ignore_index=True)
 
-    st.success("Thank you for completing the survey! Your Code: 77AW")
+    st.toast("🎯 IMPORTANT: Please copy your completion code - 77AWCHI - this will be asked when you return to the Qualtrics survey for full payment via Prolific. Thank you for completing the survey!", icon="⚠️")
+    time.sleep(60)  # Keeps the toast visible for 60 seconds
 
 # # Initialize session state for data storage with a unique key
 # if 'hr_survey_data' not in st.session_state:
