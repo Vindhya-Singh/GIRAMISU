@@ -56,7 +56,7 @@ def save_survey(location, department, hiring_time, fair_strategies, rehire, paym
     new_df = pd.DataFrame([new_entry])
     st.session_state.hr_survey_data = pd.concat([st.session_state.hr_survey_data, new_df], ignore_index=True)
 
-    st.success("Thank you for completing the survey! Please enter the code 77AW in the survey!")
+    st.success("Thank you for completing the survey! Your Code: 77AW")
 
 # # Initialize session state for data storage with a unique key
 # if 'hr_survey_data' not in st.session_state:
