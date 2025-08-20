@@ -56,8 +56,8 @@ def save_survey(location, department, hiring_time, fair_strategies, rehire, paym
     # Add to session state
     new_df = pd.DataFrame([new_entry])
     st.session_state.hr_survey_data = pd.concat([st.session_state.hr_survey_data, new_df], ignore_index=True)
-
-    st.toast("🎯 IMPORTANT: Please copy your completion code - 77AWCHI - this will be asked when you return to the Qualtrics survey for full payment via Prolific. Thank you for completing the survey!", icon="⚠️")
+    st.success("Thank you for completing the survey! Your Code: 77CHI")
+    st.toast("🎯 IMPORTANT: Please copy your completion code - 77CHI - this will be asked when you return to the Qualtrics survey for full payment via Prolific. Thank you for completing the survey!", icon="⚠️")
     time.sleep(60)  # Keeps the toast visible for 60 seconds
 
 # # Initialize session state for data storage with a unique key
