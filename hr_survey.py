@@ -97,8 +97,16 @@ def show_hr_survey():
 
     with st.form("hr_survey_form"):
         # Location input
+        # country_names = [country.name for country in pycountry.countries]
+        # location = st.selectbox("Select your location/country:", sorted(country_names))
+        # Location input
         country_names = [country.name for country in pycountry.countries]
-        location = st.selectbox("Select your location/country:", sorted(country_names))
+        location = st.selectbox(
+            "Select your location/country:", 
+            sorted(country_names),
+            index=None,  # No default selection
+            placeholder="Choose your country...",  # Prompt text when nothing is selected
+        )
         
         # Department selection
         departments = [
