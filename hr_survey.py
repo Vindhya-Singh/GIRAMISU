@@ -10,6 +10,16 @@ import uuid
 import firebase_admin
 from firebase_admin import credentials, db
 
+
+# Hide the default Streamlit menu and footer
+hide_streamlit_style = """
+    <style>
+    #MainMenu {visibility: hidden;}
+    footer {visibility: hidden;}
+    </style>
+"""
+st.markdown(hide_streamlit_style, unsafe_allow_html=True)
+
 @st.cache_resource
 def init_firebase():
     if not firebase_admin._apps:
