@@ -11,6 +11,16 @@ import uuid
 from streamlit.components.v1 import html
 from hr_survey import hr_survey_page
 
+# Hide the default Streamlit menu and footer
+hide_streamlit_style = """
+    <style>
+    #MainMenu {visibility: hidden;}
+    footer {visibility: hidden;}
+    </style>
+"""
+st.markdown(hide_streamlit_style, unsafe_allow_html=True)
+
+
 # Initialize Firebase only once
 @st.cache_resource
 def init_firebase():
