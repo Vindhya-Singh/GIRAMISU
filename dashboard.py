@@ -36,7 +36,6 @@ def submit_story_to_firebase(name, role, story):
     ref.child(story_id).set(data)
     
 # --- Stories Database (CSV Storage) ---
-story_file = "stories.csv"
 submitted_story_file = 'submitted_stories.csv'
 
 def load_stories():
@@ -44,13 +43,6 @@ def load_stories():
         return pd.read_csv(story_file)
     except FileNotFoundError:
         return pd.DataFrame(columns=["timestamp", "name", "role", "story"])
-
-def save_story(name, role, story):
-    df = load_stories()
-    new_row = {"timestamp": datetime.now().date(), "name": name, "role": role, "story": story}
-    df = pd.concat([df, pd.DataFrame([new_row])], ignore_index=True)
-    open('submitted_stories.csv', 'w').write(df.to_csv(), index=False)
-    # df.to_csv(submitted_story_file, index=False)
 
     
 # --- Page Config ---
