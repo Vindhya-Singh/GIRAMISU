@@ -34,9 +34,6 @@ def submit_story_to_firebase(name, role, story):
         "story": story
     }
     ref.child(story_id).set(data)
-    
-# --- Stories Database (CSV Storage) ---
-submitted_story_file = 'submitted_stories.csv'
 
 def load_stories():
     try:
