@@ -1,15 +1,40 @@
-import json
 import streamlit as st
 import pandas as pd
-import matplotlib
 import plotly.express as px
 import random
+
+import firebase_admin
+from firebase_admin import credentials, db
 from datetime import datetime
+import uuid
 
 from streamlit.components.v1 import html
 from hr_survey import hr_survey_page
 
+# Initialize Firebase only once
+@st.cache_resource
+def init_firebase():
+    if not firebase_admin._apps:
+        cred = credentials.Certificate(dict(st.secrets["firebase"]))
+        firebase_admin.initialize_app(cred, {
+            'databaseURL': st.secrets["firebase"]["databaseURL"]
+        })
 
+# Always call this before any Firebase operation
+init_firebase()
+
+# Write to Firebase Realtime Database
+def submit_story_to_firebase(name, role, story):
+    ref = db.reference("/stories")
+    story_id = str(uuid.uuid4())
+    data = {
+        "timestamp": datetime.now().isoformat(timespec="seconds"),
+        "name": name,
+        "role": role,
+        "story": story
+    }
+    ref.child(story_id).set(data)
+    
 # --- Stories Database (CSV Storage) ---
 story_file = "stories.csv"
 submitted_story_file = 'submitted_stories.csv'
@@ -24,7 +49,8 @@ def save_story(name, role, story):
     df = load_stories()
     new_row = {"timestamp": datetime.now().date(), "name": name, "role": role, "story": story}
     df = pd.concat([df, pd.DataFrame([new_row])], ignore_index=True)
-    df.to_csv(submitted_story_file, index=False)
+    open('submitted_stories.csv', 'w').write(df.to_csv(), index=False)
+    # df.to_csv(submitted_story_file, index=False)
 
     
 # --- Page Config ---
@@ -34,11 +60,13 @@ st.set_page_config(page_title="📊 HRM Perspectives on Gig Work", layout="wide"
 menu = st.sidebar.radio("Navigation", ["Homepage", "Global HR Compass", "Impact Metrics Hub", "HR Voices and Sentiments", "Transparency Tracker"])
 
 if menu == "Homepage":
-    st.title("Welcome to GIRAMISU: Gig Inclusion and Responsible Action through Managerial Insight and Sensemaking for Use")
+    st.title("Welcome to GIRAMISU")
+    st.subheader("Gig Inclusion and Responsible Action through Managerial Insight and Sensemaking for Use")
     st.markdown("---")
 
     st.subheader("🔍 What is this about?")
-    st.write("This dashboard explores gig economy through the lens of HR Managers. Our Motto is: Gig Inclusion and Responsible Action through Managerial Insight and Sensemaking for Use.")
+    st.write("Inspired by the layered harmony of tiramisu, we recognize three pillars of the gig economy: policy makers who shape the landscape, gig workers who fuel its flexibility, and HR managers who bridge the gap between structure and agility. Designed exclusively for HR leaders, GIRAMISU transforms raw insights into actionable strategies, fostering transparency in hiring practices, accountability in workforce management, and fairness in workplace climates. This is your platform to navigate the complexities of the gig economy with confidence—because inclusive growth begins with empowered decision-making.")
+    st.write("Explore. Act. Lead. Because managing gig talent shouldn’t be a guessing game.")
 
     st.subheader("🎥 Watch an Overview Video")
     st.video("https://www.youtube.com/watch?v=Wax8gZBCur4")  # Replace with your real video
@@ -137,7 +165,7 @@ elif menu == "Global HR Compass":
     )
         st.plotly_chart(fig, use_container_width=True)
         
-        st.write("**What are the most important Discourse Topics in the global HRM discussions on managing gig workers?**")
+        st.write("**What are the most important Discourse Topics in the global HRM disourse on managing gig workers?**")
         st.write("**How to use:** Click on See Explanation to know more about each Discourse Topic.")
         topics_data = {
             "💼 Work From Home": "Work From Home in the gig economy enables high-skilled roles to be outsourced globally, advancing gig workers up the value chain, while its flexibility particularly empowers women to participate more actively than in traditional sectors.",
@@ -166,7 +194,7 @@ elif menu == "Global HR Compass":
                     st.write(back_content)
 
     with col2:
-        st.write("**HRM Practices Longitudnal Evolution**")
+        st.write("**HRM Practices Longitudinal Evolution**")
         # Create DataFrame from the chart data
         data = {
             "Year": ["2009", "2016", "2017", "2018", "2019", "2020", "2021", "2022", "2023", "2024"],
@@ -258,7 +286,7 @@ elif menu == "Global HR Compass":
                 "Covid": [306, 514, 561, 340, 391, 390, 526, 531, 249, 807],
                 "AI in gig work": [554, 1004, 880, 717, 729, 725, 997, 1018, 474, 1477]
             }
-        st.write("**How are HRM Practices related to the discussion topics?**")
+        st.write("**How are HRM Practices related to the Discourse Topics?**")
     
         # Create DataFrame
         df = pd.DataFrame(data)
@@ -371,7 +399,7 @@ elif menu == "Impact Metrics Hub":
         """)
         
         survey_link = "https://qualtricsxmqkspmg99k.qualtrics.com/jfe/form/SV_43eZXhMl5krog0m"
-        st.code(survey_link, language="markdown")
+        st.code(survey_link, language="HTML")
         
         st.markdown("""
         The survey will ask about:
@@ -552,13 +580,22 @@ elif menu == "HR Voices and Sentiments":
     st.subheader("📝 Share Your Story")
 
     with st.form("story_form"):
-        name = st.text_input("Your Name (optional)")
+        name = st.text_input("Your Location")
         role = st.text_input("Your Role")
         story = st.text_area("What’s your experience managing gig workers?")
         submitted = st.form_submit_button("Submit Story")
-        if submitted:
-            save_story(name, role, story)
-            st.success("Thanks for sharing your story!")
+
+    if submitted:
+        submit_story_to_firebase(name, role, story)
+        st.success("Thanks for sharing your story!")
+    # with st.form("story_form"):
+    #     name = st.text_input("Your Location")
+    #     role = st.text_input("Your Role")
+    #     story = st.text_area("What’s your experience managing gig workers?")
+    #     submitted = st.form_submit_button("Submit Story")
+    #     if submitted:
+    #         save_story(name, role, story)
+    #         st.success("Thanks for sharing your story!")
 
 # # In your page routing:
 if menu == "Transparency Tracker":
